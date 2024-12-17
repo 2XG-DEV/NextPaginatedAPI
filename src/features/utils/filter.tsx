@@ -8,23 +8,18 @@ type FilterProps = {
 
 export default function Filter({ options, defaultValue, name }: FilterProps) {
   return (
-    <div className="mb-4">
-      <select
-        name={name}
-        defaultValue={defaultValue}
-        className="w-full max-w-xs px-4 py-2 border rounded"
-        onChange={(e) => {
-          // Auto-submit the form when selection changes
-          e.target.form?.submit();
-        }}
-      >
-        <option value="">All options</option>
-        {options.map((option) => (
-          <option key={option} value={option}>
-            {option}
-          </option>
-        ))}
-      </select>
-    </div>
+    <select
+      name={name}
+      defaultValue={defaultValue}
+      className="w-full px-4 py-2.5 bg-white border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-gray-700"
+      onChange={(e) => e.target.form?.submit()}
+    >
+      <option value="">All Languages</option>
+      {options.map((option) => (
+        <option key={option} value={option}>
+          {option}
+        </option>
+      ))}
+    </select>
   );
 }

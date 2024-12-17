@@ -11,7 +11,7 @@ const SearchBar: React.FC<Props> = ({ defaultValue, placeholder, name }) => {
       name={name}
       defaultValue={defaultValue}
       placeholder={placeholder}
-      className="w-full max-w-md px-4 py-2 border rounded"
+      className="w-full px-4 py-2.5 bg-white border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-gray-700 placeholder-gray-400"
     />
   );
 };

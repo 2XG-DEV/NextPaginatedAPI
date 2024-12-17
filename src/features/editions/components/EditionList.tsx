@@ -8,8 +8,8 @@ type Props = {
 
 export default function EditionList({ data }: Props) {
   return (
-    <div>
-      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+    <div className="bg-gray-50 rounded-lg p-6">
+      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
         {Object.entries(data.data).map(([key, translation]) => (
           <EditionCard key={key} translation={translation} />
         ))}
