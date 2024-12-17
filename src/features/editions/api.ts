@@ -15,11 +15,12 @@ export async function getEditions() {
 }
 
 export async function getEditionsFromLocal(
+  query: string = "",
   page: number = 1,
   limit: number = 10
 ) {
   const response = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/api/editions?page=${page}&limit=${limit}`
+    `${process.env.NEXT_PUBLIC_API_URL}/api/editions?page=${page}&limit=${limit}&query=${query}`
   );
 
   if (!response.ok) {
