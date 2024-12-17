@@ -4,9 +4,18 @@ export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
   const page = parseInt(searchParams.get("page") || "1");
   const limit = parseInt(searchParams.get("limit") || "10");
+  const query = searchParams.get("query") || "";
 
   const allEditions = await getEditions();
-  const editionEntries = Object.entries(allEditions);
+  let editionEntries = Object.entries(allEditions);
+  if (query) {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    editionEntries = editionEntries.filter(([_, translation]) => {
+      const searchableText =
+        `${translation.name} ${translation.author} ${translation.language}`.toLowerCase();
+      return searchableText.includes(query.toLowerCase());
+    });
+  }
 
   const startIndex = (page - 1) * limit;
   const endIndex = startIndex + limit;
