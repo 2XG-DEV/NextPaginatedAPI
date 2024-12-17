@@ -10,7 +10,7 @@ export async function GET(request: Request) {
   const allEditions = await getEditions();
   let editionEntries = Object.entries(allEditions);
 
-  // Apply filters
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   editionEntries = editionEntries.filter(([_, translation]) => {
     const matchesSearch = query
       ? `${translation.name} ${translation.author} ${translation.language}`
