@@ -31,24 +31,44 @@ export default async function Home({ searchParams }: Props) {
   const languages = await getLanguages();
 
   return (
-    <div className="container mx-auto px-4">
-      <form className="flex flex-col md:flex-row gap-4 mb-6">
-        <SearchBar
-          defaultValue={query}
-          name="query"
-          placeholder="Search editions..."
-        />
-        <Filter name="language" options={languages} defaultValue={language} />
-        <button type="submit" className="sr-only">
-          Submit
-        </button>
-      </form>
-      <EditionList data={editions} />{" "}
-      <PaginationControls
-        currentPage={currentPage}
-        data={editions.metadata}
-        extraParams={{ query, language }}
-      />
+    <div className="min-h-screen bg-gray-100 py-8">
+      <div className="container mx-auto px-4">
+        <h1 className="text-3xl font-bold text-gray-800 mb-8">
+          Quran Translations
+        </h1>
+
+        <form className="bg-white rounded-lg shadow-md p-6 mb-8">
+          <div className="flex flex-col md:flex-row gap-4">
+            <div className="flex-grow">
+              <SearchBar
+                defaultValue={query}
+                name="query"
+                placeholder="Search editions..."
+              />
+            </div>
+            <div className="md:w-64">
+              <Filter
+                name="language"
+                options={languages}
+                defaultValue={language}
+              />
+            </div>
+            <button type="submit" className="sr-only">
+              Submit
+            </button>
+          </div>
+        </form>
+
+        <EditionList data={editions} />
+
+        <div className="mt-8">
+          <PaginationControls
+            currentPage={currentPage}
+            data={editions.metadata}
+            extraParams={{ query, language }}
+          />
+        </div>
+      </div>
     </div>
   );
 }
