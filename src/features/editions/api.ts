@@ -17,10 +17,18 @@ export async function getEditions() {
 export async function getEditionsFromLocal(
   query: string = "",
   page: number = 1,
-  limit: number = 10
+  limit: number = 10,
+  language: string = ""
 ) {
+  const params = new URLSearchParams({
+    page: page.toString(),
+    limit: limit.toString(),
+    query,
+    language,
+  });
+
   const response = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/api/editions?page=${page}&limit=${limit}&query=${query}`
+    `${process.env.NEXT_PUBLIC_API_URL}/api/editions?${params}`
   );
 
   if (!response.ok) {
@@ -29,4 +37,17 @@ export async function getEditionsFromLocal(
 
   const result: PaginatedResponse<QuranEditions> = await response.json();
   return result;
+}
+
+export async function getLanguages(): Promise<string[]> {
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_API_URL}/api/languages`
+  );
+
+  if (!response.ok) {
+    throw new Error("Failed to fetch languages");
+  }
+
+  const result = await response.json();
+  return result.data;
 }
