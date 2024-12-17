@@ -3,21 +3,24 @@ import { getEditionsFromLocal, getLanguages } from "@/features/editions/api";
 import { PaginationControls } from "@/features/utils/pagination";
 import SearchBar from "@/features/utils/search";
 import Filter from "@/features/utils/filter";
+import Link from "next/link";
+
+type SearchParams = {
+  page?: string;
+  limit?: string;
+  query?: string;
+  language?: string;
+};
 
 type Props = {
-  searchParams: {
-    page?: string;
-    limit?: string;
-    query?: string;
-    language?: string;
-  };
+  searchParams: Promise<SearchParams>;
 };
 
 export default async function Home({ searchParams }: Props) {
-  const params = await searchParams; // we have to await params as per nextjs docs: https://nextjs.org/docs/messages/sync-dynamic-apis
+  const params = await searchParams;
+
   const query = params.query || "";
   const language = params.language || "";
-
   const currentPage = Math.max(1, parseInt(params.page || "1"));
   const limit = Math.max(1, parseInt(params.limit || "10"));
 
@@ -33,9 +36,11 @@ export default async function Home({ searchParams }: Props) {
   return (
     <div className="min-h-screen bg-gray-100 py-8">
       <div className="container mx-auto px-4">
-        <h1 className="text-3xl font-bold text-gray-800 mb-8">
-          Quran Translations
-        </h1>
+        <Link href="/">
+          <h1 className="text-3xl font-bold text-gray-800 mb-8">
+            Quran Translations
+          </h1>
+        </Link>
 
         <form className="bg-white rounded-lg shadow-md p-6 mb-8">
           <div className="flex flex-col md:flex-row gap-4">
