@@ -1,3 +1,4 @@
+import { PaginatedResponse } from "@/features/utils/pagination";
 import { QuranEditions } from "./types";
 
 export async function getEditions() {
@@ -13,12 +14,18 @@ export async function getEditions() {
   return translations;
 }
 
-export async function getEditionsFromLocal() {
-  const quoranAPIRequest = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/api/editions`
+export async function getEditionsFromLocal(
+  page: number = 1,
+  limit: number = 10
+) {
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_API_URL}/api/editions?page=${page}&limit=${limit}`
   );
 
-  const translations: QuranEditions = await quoranAPIRequest.json();
+  if (!response.ok) {
+    throw new Error("Failed to fetch editions");
+  }
 
-  return translations;
+  const result: PaginatedResponse<QuranEditions> = await response.json();
+  return result;
 }
