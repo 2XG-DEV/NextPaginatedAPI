@@ -1,4 +1,3 @@
-import { Suspense } from "react";
 import EditionList from "@/features/editions/components/EditionList";
 import { getEditionsFromLocal } from "@/features/editions/api";
 
@@ -10,17 +9,15 @@ type Props = {
 };
 
 export default async function Home({ searchParams }: Props) {
-  const params = await searchParams; // we have to await the searchParams object as per the nextjs docs
-  const currentPage = parseInt(params.page || "1");
-  const limit = parseInt(params.limit || "10");
+  const params = await searchParams; // we have to await params as per nextjs docs: https://nextjs.org/docs/messages/sync-dynamic-apis
+  const currentPage = Math.max(1, parseInt(params.page || "1"));
+  const limit = Math.max(1, parseInt(params.limit || "10"));
 
   const editions = await getEditionsFromLocal(currentPage, limit);
 
   return (
     <div className="container mx-auto px-4">
-      <Suspense fallback={<div>Loading...</div>}>
-        <EditionList data={editions} currentPage={currentPage} />
-      </Suspense>
+      <EditionList data={editions} currentPage={currentPage} />
     </div>
   );
 }
